@@ -6,7 +6,7 @@
 
 using namespace std;
 
-enum TypeOfSort { lexicographic, marks };
+enum TypeOfSort { lexicographic, marks };		//Тип сортировки студентов.
 
 class Student;
 
@@ -29,8 +29,6 @@ public:
 	Student* get_student(string lastName, string firstName, string patronymic);		//Получить студента по ФИО.
 	unsigned get_number();															//Получить номер группы.
 	unsigned get_count_of_student();												//Получить число студентов в группе.
-	vector<Student*>::iterator get_end();											//Получить итератор на конец списка студентов.
-	vector<Student*>::iterator get_start();											//Получить итератор на начало списка студентов.
 	vector<Student*>& get_list();													//Получить список студентов группы.
 	vector<Student*>& get_sort_students(TypeOfSort sort);							//Получить отсортированный список студентов группы, в зависимости от типа сортировка.
 	//---------------------------------------
