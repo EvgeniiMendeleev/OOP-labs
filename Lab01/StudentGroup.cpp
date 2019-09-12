@@ -60,19 +60,13 @@ unsigned StudentGroup::get_count_of_student()
 	return studentsOfGroup.size();
 }
 
-vector<Student*>::iterator StudentGroup::get_end()
-{
-	return studentsOfGroup.end();
-}
-
-vector<Student*>::iterator StudentGroup::get_start()
-{
-	return studentsOfGroup.begin();
-}
-
 bool StudentGroup::delete_student(Student* student)
 {
-	student->escape_from_group(this);
+	if (student->escape_from_group(this))
+	{
+		return true;
+	}
+
 	return false;
 }
 
@@ -113,7 +107,28 @@ vector<Student*>& StudentGroup::get_sort_students(TypeOfSort sort)
 	}
 	else if (sort == marks)
 	{
+		size_t i = 1;
 
+		while (i < studentsOfGroup.size())
+		{
+			if (i == 0)
+			{
+				i = 1;
+			}
+
+			if (studentsOfGroup[i - 1]->get_performance() > studentsOfGroup[i]->get_performance())
+			{
+				Student* t = studentsOfGroup[i - 1];
+				studentsOfGroup[i - 1] = studentsOfGroup[i];
+				studentsOfGroup[i] = t;
+
+				--i;
+			}
+			else
+			{
+				++i;
+			}
+		}
 	}
 
 	return studentsOfGroup;
