@@ -8,7 +8,7 @@ using namespace std;
 
 class StudentGroup;
 
-enum TypeOfPerformance {Perfectly, Good, Bad, Nothing};
+enum TypeOfPerformance {Perfectly, Good, Bad, Nothing};		//Тип успеваемости: отличник, хорошист, двоечник, пока оценок нету.
 
 class Student
 {
@@ -16,7 +16,7 @@ class Student
 	string lastName;					//Фамилия
 	string patronymic;					//Отчество
 
-	TypeOfPerformance performance;
+	TypeOfPerformance performance;		//Успеваемость студента.
 	vector<unsigned> numbersOfGroup;	//Номера групп, в которых находится студент.
 
 public:
