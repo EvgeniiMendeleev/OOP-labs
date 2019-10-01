@@ -6,8 +6,6 @@
 
 using namespace std;
 
-class StudentGroup;
-
 enum class TypeOfPerformance { Perfectly, Good, Bad, Nothing };		//Тип успеваемости: отличник, хорошист, двоечник, пока оценок нету.
 
 class Student
