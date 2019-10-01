@@ -1,8 +1,7 @@
 #include "stdafx.h"
 #include "Student.h"
-#include "StudentGroup.h"
 
-Student::Student(string lastName, string firstName, string patronymic, TypeOfPerformance performance)
+Student::Student(const string& lastName, const string& firstName, const string& patronymic, const TypeOfPerformance performance)
 {
 	this->firstName = firstName;
 	this->lastName = lastName;
@@ -11,94 +10,75 @@ Student::Student(string lastName, string firstName, string patronymic, TypeOfPer
 	this->performance = performance;
 }
 
-unsigned Student::get_number_of_group(unsigned i)
+unsigned Student::getNumberOfGroup(unsigned i) const
 {
 	return numbersOfGroup[i];
 }
 
-unsigned Student::get_count_of_group()
+unsigned Student::getCountOfGroup()
 {
 	return numbersOfGroup.size();
 }
 
-string Student::get_firstName()
+const string& Student::getFirstName() const
 {
 	return firstName;
 }
 
-string Student::get_lastName()
+const string& Student::getLastName() const
 {
 	return lastName;
 }
 
-string Student::get_patronymic()
+const string& Student::getPatronymic() const
 {
 	return patronymic;
 }
 
-void Student::set_number_of_group(unsigned numberOfGroup)
+void Student::setNumberOfGroup(unsigned numberOfGroup)
 {
 	this->numbersOfGroup.push_back(numberOfGroup);
 }
 
-bool Student::escape_from_group(StudentGroup* group)
-{
-	if (group != nullptr)
-	{
-		for (unsigned i = 0; i < numbersOfGroup.size(); i++)
-		{
-			if (numbersOfGroup[i] == group->get_number())
-			{
-				numbersOfGroup.erase(numbersOfGroup.begin() + i);
-
-				vector<Student*>& listOfStudents = group->get_list();
-
-				for (unsigned j = 0; j < listOfStudents.size(); j++)
-				{
-					if (listOfStudents[j] == this)
-					{
-						listOfStudents.erase(listOfStudents.begin() + j);
-						break;
-					}
-				}
-
-				/*vector<Student*>::iterator it = group->get_start();
-
-				for (unsigned j = 0; j < group->get_count_of_student(); j++, ++it)
-				{
-					if (*it == this)
-					{
-						vector<Student*>& tmpList = group->get_list();
-						tmpList.erase(it);
-						break;
-					}
-				}*/
-
-				return true;
-			}
-		}
-	}
-
-	return false;
-}
-
-TypeOfPerformance Student::get_performance()
+TypeOfPerformance Student::getPerformance() const
 {
 	return performance;
 }
 
-void Student::show_student()
+bool Student::escapeFromGroup(unsigned numberOfGroup)
 {
-	cout << this->lastName << " " << this->firstName << " " << this->patronymic << " " << this->performance << endl;
-	
-	cout << "Номера групп, в которых находится данный студент: ";
-	for (unsigned i = 0; i < numbersOfGroup.size(); i++)
-	{
-		cout << numbersOfGroup[i] << " ";
-	}
+	vector<unsigned>::iterator it = numbersOfGroup.begin();
 
+	while (true)
+	{
+		if (*it == numberOfGroup)
+		{
+			numbersOfGroup.erase(it);
+			return true;
+		}
+		if (it == numbersOfGroup.end())
+		{
+			return false;
+		}
+
+		++it;
+	}
 }
 
-Student::~Student()
+ostream& operator<<(ostream& stream, Student& student)
 {
+	stream << "-----------------------------------------------------------------------------------------------" << endl;
+	stream << "Имя студента: " << student.getLastName() << " " << student.getFirstName() << " " << student.getPatronymic() << endl;
+	stream << "Успеваемость студента: " << static_cast<unsigned>(student.getPerformance()) << endl;
+	stream << "Номера групп, в которых находится студент: ";
+
+	for (unsigned i = 0; i < student.getCountOfGroup(); i++)
+	{
+		stream << student.getNumberOfGroup(i) << " ";
+	}
+	stream << endl;
+
+	stream << "-----------------------------------------------------------------------------------------------" << endl;
+
+	return stream;
 }
