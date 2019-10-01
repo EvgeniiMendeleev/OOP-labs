@@ -7,20 +7,20 @@ StudentGroup::StudentGroup(unsigned numberOfGroup)
 	this->numberOfGroup = numberOfGroup;
 }
 
-bool StudentGroup::set_student(Student* student)
+bool StudentGroup::setStudent(Student& student)
 {
 	if (studentsOfGroup.size() != 20)
 	{
-		for (unsigned i = 0; i < student->get_count_of_group(); i++)
+		for (unsigned i = 0; i < student.getCountOfGroup(); i++)
 		{
-			if (student->get_number_of_group(i) == numberOfGroup)
+			if (student.getNumberOfGroup(i) == numberOfGroup)
 			{
 				return false;
 			}
 		}
 
-		student->set_number_of_group(numberOfGroup);
-		studentsOfGroup.push_back(student);
+		student.setNumberOfGroup(numberOfGroup);
+		studentsOfGroup.push_back(&student);
 
 		return true;
 	}
@@ -28,20 +28,11 @@ bool StudentGroup::set_student(Student* student)
 	return false;
 }
 
-void StudentGroup::show_students()
+const Student* StudentGroup::getStudent(const string& lastName, const string& firstName, const string& patronymic) const
 {
 	for (unsigned i = 0; i < studentsOfGroup.size(); i++)
 	{
-		studentsOfGroup[i]->show_student();
-		cout << endl;
-	}
-}
-
-Student* StudentGroup::get_student(string lastName, string firstName, string patronymic)
-{
-	for (unsigned i = 0; i < studentsOfGroup.size(); i++)
-	{
-		if (studentsOfGroup[i]->get_firstName() == firstName && studentsOfGroup[i]->get_lastName() == lastName && studentsOfGroup[i]->get_patronymic() == patronymic)
+		if (studentsOfGroup[i]->getFirstName() == firstName && studentsOfGroup[i]->getLastName() == lastName && studentsOfGroup[i]->getPatronymic() == patronymic)
 		{
 			return studentsOfGroup[i];
 		}
@@ -50,90 +41,80 @@ Student* StudentGroup::get_student(string lastName, string firstName, string pat
 	return nullptr;
 }
 
-unsigned StudentGroup::get_number()
+unsigned StudentGroup::getNumber() const
 {
 	return numberOfGroup;
 }
 
-unsigned StudentGroup::get_count_of_student()
+unsigned StudentGroup::getCountOfStudent()
 {
 	return studentsOfGroup.size();
 }
 
-bool StudentGroup::delete_student(Student* student)
+bool StudentGroup::deleteStudent(Student& student)
 {
-	if (student->escape_from_group(this))
+	vector<Student*>::iterator it = studentsOfGroup.begin();
+
+	while (true)
 	{
-		return true;
-	}
-
-	return false;
-}
-
-vector<Student*>& StudentGroup::get_list()
-{
-	return studentsOfGroup;
-}
-
-vector<Student*>& StudentGroup::get_sort_students(TypeOfSort sort)
-{
-	if (sort == lexicographic)
-	{
-		size_t i = 1;
-
-		while (i < studentsOfGroup.size())
+		if (*it == &student)
 		{
-			if (i == 0)
-			{
-				i = 1;
-			}
-
-			Student* ItFirst = studentsOfGroup[i - 1];
-			Student* ItSecond = studentsOfGroup[i];
-
-			if (strcmp(ItFirst->get_lastName().c_str(), ItSecond->get_lastName().c_str()) < 0)
-			{
-				++i;
-			}
-			else
-			{
-				Student* t = studentsOfGroup[i - 1];
-				studentsOfGroup[i - 1] = studentsOfGroup[i];
-				studentsOfGroup[i] = t;
-
-				--i;
-			}
+			studentsOfGroup.erase(it);
+			student.escapeFromGroup(this->getNumber());
+			return true;
 		}
-	}
-	else if (sort == marks)
-	{
-		size_t i = 1;
-
-		while (i < studentsOfGroup.size())
+		if (it == studentsOfGroup.end())
 		{
-			if (i == 0)
-			{
-				i = 1;
-			}
-
-			if (studentsOfGroup[i - 1]->get_performance() > studentsOfGroup[i]->get_performance())
-			{
-				Student* t = studentsOfGroup[i - 1];
-				studentsOfGroup[i - 1] = studentsOfGroup[i];
-				studentsOfGroup[i] = t;
-
-				--i;
-			}
-			else
-			{
-				++i;
-			}
+			return false;
 		}
-	}
 
-	return studentsOfGroup;
+		++it;
+	}
 }
 
-StudentGroup::~StudentGroup()
+vector<Student> StudentGroup::getSortStudents(TypeOfSort type)
 {
+	vector<Student> sortedStudents;
+
+	for (unsigned i = 0; i < studentsOfGroup.size(); i++)
+	{
+		sortedStudents.push_back(*studentsOfGroup[i]);
+	}
+
+	if (type == TypeOfSort::lexicogrpahic)
+	{
+		sort(sortedStudents.begin(), sortedStudents.end(), [](Student& v1, Student& v2){ return v1.getLastName() < v2.getLastName(); });
+	}
+	else if (type == TypeOfSort::marks)
+	{
+		sort(sortedStudents.begin(), sortedStudents.end(), [](Student& v1, Student& v2){ return v1.getPerformance() < v2.getPerformance(); });
+	}
+
+	return sortedStudents;
+}
+
+Student& StudentGroup::getStudentOnNumber(unsigned i) const
+{
+	return (*studentsOfGroup[i]);
+}
+
+ostream& operator<<(ostream& stream, StudentGroup& group)
+{
+	for (unsigned i = 0; i < group.getCountOfStudent(); i++)
+	{
+		stream << "------------------------------------------------------------------------------" << endl;
+		stream << "Имя студента: " << group.getStudentOnNumber(i).getLastName() << " " << group.getStudentOnNumber(i).getFirstName() << " " << group.getStudentOnNumber(i).getPatronymic() << endl;
+		stream << "Успеваемость студента: " << static_cast<unsigned>(group.getStudentOnNumber(i).getPerformance()) << endl;
+		stream << "Номера групп, в которых находится студент: ";
+
+		for (unsigned j = 0; j < group.getStudentOnNumber(i).getCountOfGroup(); j++)
+		{
+			stream << group.getStudentOnNumber(i).getNumberOfGroup(j) << " ";
+		}
+		stream << endl;
+
+		stream << "------------------------------------------------------------------------------" << endl;
+	}
+
+	return stream;
 }
