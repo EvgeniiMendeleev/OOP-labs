@@ -3,10 +3,11 @@
 #include <iostream>
 #include <iterator>
 #include <cstdlib>
+#include <algorithm>
 
 using namespace std;
 
-enum TypeOfSort { lexicographic, marks };		//Тип сортировки студентов.
+enum class TypeOfSort { lexicogrpahic, marks };
 
 class Student;
 
@@ -17,24 +18,23 @@ class StudentGroup
 
 public:
 	StudentGroup(unsigned numberOfGroup);
-	~StudentGroup();
+	~StudentGroup() = default;
 
-	bool delete_student(Student* student);		//Исключение студента из группы.
+	bool deleteStudent(Student& student);		//Исключение студента из группы.
 
 	//------------------SET------------------
-	bool set_student(Student* student);												//Принять студента в группу.
+	bool setStudent(Student& student);									//Принять студента в группу.
 	//---------------------------------------
 
 	//------------------GET------------------
-	Student* get_student(string lastName, string firstName, string patronymic);		//Получить студента по ФИО.
-	unsigned get_number();															//Получить номер группы.
-	unsigned get_count_of_student();												//Получить число студентов в группе.
-	vector<Student*>& get_list();													//Получить список студентов группы.
-	vector<Student*>& get_sort_students(TypeOfSort sort);							//Получить отсортированный список студентов группы, в зависимости от типа сортировка.
+	const Student* getStudent(const string& lastName, const string& firstName, const string& patronymic) const;		//Получить студента по ФИО.
+	unsigned getNumber() const;																						//Получить номер группы.
+	unsigned getCountOfStudent();																					//Получить число студентов в группе.
+	vector<Student> getSortStudents(TypeOfSort type);																//Получить отсортированный список студентов группы, в зависимости от типа сортировка.
+	Student& getStudentOnNumber(unsigned i) const;																	//Получить студента по номеру в списке.
 	//---------------------------------------
 
-	//-----------------SHOW------------------
-	void show_students();															//Показать всех студентов.
-	//---------------------------------------
 };
+
+ostream& operator<<(ostream& stream, StudentGroup& group);
 
