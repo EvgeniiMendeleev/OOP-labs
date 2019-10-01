@@ -8,7 +8,7 @@ using namespace std;
 
 class StudentGroup;
 
-enum TypeOfPerformance {Perfectly, Good, Bad, Nothing};		//Тип успеваемости: отличник, хорошист, двоечник, пока оценок нету.
+enum class TypeOfPerformance { Perfectly, Good, Bad, Nothing };		//Тип успеваемости: отличник, хорошист, двоечник, пока оценок нету.
 
 class Student
 {
@@ -20,25 +20,24 @@ class Student
 	vector<unsigned> numbersOfGroup;	//Номера групп, в которых находится студент.
 
 public:
-	Student(string lastName, string firstName, string patronymic, TypeOfPerformance performance);
-	~Student();
+	Student(const string& lastName, const string& firstName, const string& patronymic, const TypeOfPerformance performance);
+	~Student() = default;
 
-	bool escape_from_group(StudentGroup* group);			//Уйти из группы.
+	bool escapeFromGroup(unsigned nmumberOfGroup);			//Уйти из группы.
 
 	//------------------SET------------------
-	void set_number_of_group(unsigned numberOfGroup);		//Установить номер группы, в которой находится студент.
+	void setNumberOfGroup(unsigned numberOfGroup);			//Установить номер группы, в которой находится студент.
 	//---------------------------------------
 
 	//------------------GET------------------
-	string get_firstName();								//Получить имя.
-	string get_lastName();								//Получить фамилию.
-	string get_patronymic();							//Получить отчество.
-	unsigned get_number_of_group(unsigned i);			//Получить номер i - ой группы из numbersOfGroup.
-	unsigned get_count_of_group();						//Получить число групп, в которых находится студент.
-	TypeOfPerformance get_performance();				//Получить успеваемость.
+	const string& getFirstName() const;						//Получить имя.
+	const string& getLastName() const;						//Получить фамилию.
+	const string& getPatronymic() const;					//Получить отчество.
+	unsigned getNumberOfGroup(unsigned i) const;			//Получить номер i - ой группы из numbersOfGroup.
+	unsigned getCountOfGroup();								//Получить число групп, в которых находится студент.
+	TypeOfPerformance getPerformance() const;				//Получить успеваемость.
 	//---------------------------------------
 
-	//------------------SHOW------------------
-	void show_student();								//Показать информацию о студенте.
-	//----------------------------------------
 };
+
+ostream& operator<<(ostream& stream, Student& student);
