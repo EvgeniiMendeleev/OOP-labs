@@ -65,12 +65,12 @@ Botanist::Botanist(const string& lastName, const string& firstName, const string
 
 Mark MemberOfStudentSenate::takeASession()
 {
-	static unsigned short numberOfPass = 0;			//Изначально он не идёт на пересдачу, поэтому ноль
+	static unsigned short numberOfPass = 0;			//РР·РЅР°С‡Р°Р»СЊРЅРѕ РѕРЅ РЅРµ РёРґС‘С‚ РЅР° РїРµСЂРµСЃРґР°С‡Сѓ, РїРѕСЌС‚РѕРјСѓ РЅРѕР»СЊ
 	Mark mark = static_cast<Mark>(rand() % 4);
 
 	(mark == Mark::two) ? ++numberOfPass : numberOfPass = 0;
 
-	//Если уже вторая, т.е. последняя, пересдача, то получает тройку
+	//Р•СЃР»Рё СѓР¶Рµ РІС‚РѕСЂР°СЏ, С‚.Рµ. РїРѕСЃР»РµРґРЅСЏСЏ, РїРµСЂРµСЃРґР°С‡Р°, С‚Рѕ РїРѕР»СѓС‡Р°РµС‚ С‚СЂРѕР№РєСѓ
 	if (numberOfPass == 2)
 	{
 		return Mark::three;
@@ -87,8 +87,8 @@ MemberOfStudentSenate::MemberOfStudentSenate(const string& lastName, const strin
 ostream& operator<<(ostream& stream, Student& student)
 {
 	stream << "-----------------------------------------------------------------------------------------------" << endl;
-	stream << "Имя студента: " << student.getLastName() << " " << student.getFirstName() << " " << student.getPatronymic() << endl;
-	stream << "Успеваемость студента: " << static_cast<unsigned>(student.getPerformance()) << endl;
+	stream << "РРјСЏ СЃС‚СѓРґРµРЅС‚Р°: " << student.getLastName() << " " << student.getFirstName() << " " << student.getPatronymic() << endl;
+	stream << "РЈСЃРїРµРІР°РµРјРѕСЃС‚СЊ СЃС‚СѓРґРµРЅС‚Р°: " << static_cast<unsigned>(student.getPerformance()) << endl;
 	stream << "-----------------------------------------------------------------------------------------------" << endl;
 
 	return stream;
