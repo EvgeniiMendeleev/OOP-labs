@@ -23,29 +23,29 @@ public:
 
 #pragma region Actions
 
-	bool deleteStudent(Student& student);			//Исключение студента из группы.
+	bool deleteStudent(Student& student);			//РСЃРєР»СЋС‡РµРЅРёРµ СЃС‚СѓРґРµРЅС‚Р° РёР· РіСЂСѓРїРїС‹.
 
 #pragma endregion Describes all actions that can be performed on an object.
 
 #pragma region Setters
 
-	bool setStudent(Student& student);				//Принять студента в группу.
+	bool setStudent(Student& student);				//РџСЂРёРЅСЏС‚СЊ СЃС‚СѓРґРµРЅС‚Р° РІ РіСЂСѓРїРїСѓ.
 
 #pragma endregion Set something value.
 
 #pragma region Getters
 
-	const Student* getStudent(const string& lastName, const string& firstName, const string& patronymic) const;		//Получить студента по ФИО.
-	unsigned getNumber() const;																						//Получить номер группы.
-	unsigned getCountOfStudent();																					//Получить число студентов в группе.
-	vector<Student*> getSortStudents(TypeOfSort type);																//Получить отсортированный список студентов группы, в зависимости от типа сортировка.
-	Student& getStudentOnNumber(unsigned i) const;																	//Получить студента по номеру в списке.
+	const Student* getStudent(const string& lastName, const string& firstName, const string& patronymic) const;		//РџРѕР»СѓС‡РёС‚СЊ СЃС‚СѓРґРµРЅС‚Р° РїРѕ Р¤РРћ.
+	unsigned getNumber() const;																						//РџРѕР»СѓС‡РёС‚СЊ РЅРѕРјРµСЂ РіСЂСѓРїРїС‹.
+	unsigned getCountOfStudent();																					//РџРѕР»СѓС‡РёС‚СЊ С‡РёСЃР»Рѕ СЃС‚СѓРґРµРЅС‚РѕРІ РІ РіСЂСѓРїРїРµ.
+	vector<Student*> getSortStudents(TypeOfSort type);																//РџРѕР»СѓС‡РёС‚СЊ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅРЅС‹Р№ СЃРїРёСЃРѕРє СЃС‚СѓРґРµРЅС‚РѕРІ РіСЂСѓРїРїС‹, РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ С‚РёРїР° СЃРѕСЂС‚РёСЂРѕРІРєР°.
+	Student& getStudentOnNumber(unsigned i) const;																	//РџРѕР»СѓС‡РёС‚СЊ СЃС‚СѓРґРµРЅС‚Р° РїРѕ РЅРѕРјРµСЂСѓ РІ СЃРїРёСЃРєРµ.
 
 #pragma endregion Get something value.
 
 private:
-	unsigned numberOfGroup;						//Номер группы.
-	vector<Student*> studentsOfGroup;			//Студенты группы.
+	unsigned numberOfGroup;						//РќРѕРјРµСЂ РіСЂСѓРїРїС‹.
+	vector<Student*> studentsOfGroup;			//РЎС‚СѓРґРµРЅС‚С‹ РіСЂСѓРїРїС‹.
 };
 
 ostream& operator<<(ostream& stream, StudentGroup& group);
