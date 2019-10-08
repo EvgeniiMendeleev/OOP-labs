@@ -10,14 +10,6 @@ bool StudentGroup::setStudent(Student& student)
 {
 	if (studentsOfGroup.size() != 20)
 	{
-	/*	for (unsigned i = 0; i < student.getCountOfGroup(); i++)
-		{
-			if (student.getNumberOfGroup(i) == numberOfGroup)
-			{
-				return false;
-			}
-		}*/
-
 		for (unsigned i = 0; i < studentsOfGroup.size(); i++)
 		{
 			if (studentsOfGroup[i] == &student)
@@ -109,8 +101,8 @@ ostream& operator<<(ostream& stream, StudentGroup& group)
 	for (unsigned i = 0; i < group.getCountOfStudent(); i++)
 	{
 		stream << "------------------------------------------------------------------------------" << endl;
-		stream << "Èìÿ ñòóäåíòà: " << group.getStudentOnNumber(i).getLastName() << " " << group.getStudentOnNumber(i).getFirstName() << " " << group.getStudentOnNumber(i).getPatronymic() << endl;
-		stream << "Óñïåâàåìîñòü ñòóäåíòà: " << static_cast<unsigned>(group.getStudentOnNumber(i).getPerformance()) << endl;
+		stream << "ÃˆÃ¬Ã¿ Ã±Ã²Ã³Ã¤Ã¥Ã­Ã²Ã : " << group.getStudentOnNumber(i).getLastName() << " " << group.getStudentOnNumber(i).getFirstName() << " " << group.getStudentOnNumber(i).getPatronymic() << endl;
+		stream << "Ã“Ã±Ã¯Ã¥Ã¢Ã Ã¥Ã¬Ã®Ã±Ã²Ã¼ Ã±Ã²Ã³Ã¤Ã¥Ã­Ã²Ã : " << static_cast<unsigned>(group.getStudentOnNumber(i).getPerformance()) << endl;
 		stream << "------------------------------------------------------------------------------" << endl;
 	}
 
