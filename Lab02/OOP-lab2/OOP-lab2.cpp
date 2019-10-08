@@ -1,4 +1,4 @@
-// OOP-lab2.cpp: определяет точку входа для консольного приложения.
+// OOP-lab2.cpp: РѕРїСЂРµРґРµР»СЏРµС‚ С‚РѕС‡РєСѓ РІС…РѕРґР° РґР»СЏ РєРѕРЅСЃРѕР»СЊРЅРѕРіРѕ РїСЂРёР»РѕР¶РµРЅРёСЏ.
 //
 
 #include "stdafx.h"
@@ -14,9 +14,9 @@ int main()
 	setlocale(LC_ALL, "Russian");
 
 	StudentGroup group(7091);
-	Botanist Evgenii("Менделеев", "Евгений", "Андреевич", "Книжный червь");
-	SimplyStudent katya("Богданова", "Екатерина", "Александровна", TypeOfPerformance::good);
-	MemberOfStudentSenate arkasha("Абросимов", "Аркадий", "Иванович", "Президент", TypeOfPerformance::bad);
+	Botanist Evgenii("РњРµРЅРґРµР»РµРµРІ", "Р•РІРіРµРЅРёР№", "РђРЅРґСЂРµРµРІРёС‡", "РљРЅРёР¶РЅС‹Р№ С‡РµСЂРІСЊ");
+	SimplyStudent katya("Р‘РѕРіРґР°РЅРѕРІР°", "Р•РєР°С‚РµСЂРёРЅР°", "РђР»РµРєСЃР°РЅРґСЂРѕРІРЅР°", TypeOfPerformance::good);
+	MemberOfStudentSenate arkasha("РђР±СЂРѕСЃРёРјРѕРІ", "РђСЂРєР°РґРёР№", "РРІР°РЅРѕРІРёС‡", "РџСЂРµР·РёРґРµРЅС‚", TypeOfPerformance::bad);
 
 	group.setStudent(Evgenii);
 	group.setStudent(katya);
@@ -27,8 +27,8 @@ int main()
 	for (unsigned i = 0; i < a.size(); i++)
 	{
 		cout << "-----------------------------------------------------------------------------" << endl;
-		cout << "Имя студента: " << a[i]->getLastName() << " " << a[i]->getFirstName() << " " << a[i]->getPatronymic() << endl;
-		cout << "Успеваемость студента: " << static_cast<unsigned>(a[i]->getPerformance()) << endl;
+		cout << "РРјСЏ СЃС‚СѓРґРµРЅС‚Р°: " << a[i]->getLastName() << " " << a[i]->getFirstName() << " " << a[i]->getPatronymic() << endl;
+		cout << "РЈСЃРїРµРІР°РµРјРѕСЃС‚СЊ СЃС‚СѓРґРµРЅС‚Р°: " << static_cast<unsigned>(a[i]->getPerformance()) << endl;
 		cout << "-----------------------------------------------------------------------------" << endl;
 	}
 
