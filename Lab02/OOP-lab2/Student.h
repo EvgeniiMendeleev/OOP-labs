@@ -13,17 +13,16 @@ class Student
 {
 public:
 	Student(const string& lastName, const string& firstName, const string& patronymic, const TypeOfPerformance performance);
-	~Student() = default;
+	virtual ~Student() = default;
 
-	void goToAnotherLayer(Layer layer);						//Перейти в другое общество: ботан, член студенческого совета, обычный студент.
 	virtual Mark takeASession() = 0;						//Сдать сессию.
 
-	//------------------GET------------------
+#pragma region Getters
 	const string& getFirstName() const;						//Получить имя.
 	const string& getLastName() const;						//Получить фамилию.
 	const string& getPatronymic() const;					//Получить отчество.
 	TypeOfPerformance getPerformance() const;				//Получить успеваемость.
-	//---------------------------------------
+#pragma endregion Get a something value
 
 protected:
 	string firstName;					//Имя
@@ -36,6 +35,9 @@ protected:
 class SimplyStudent : public Student
 {
 public:
+	SimplyStudent(const string& lastName, const string& firstName, const string& patronymic, const TypeOfPerformance performance);
+	virtual ~SimplyStudent() = default;
+	
 	Mark takeASession() override;
 
 private:
@@ -44,6 +46,9 @@ private:
 class MemberOfStudentSenate final : public SimplyStudent
 {
 public:
+	MemberOfStudentSenate(const string& lastName, const string& firstName, const string& patronymic, const string& post, const TypeOfPerformance performance);
+	~MemberOfStudentSenate() = default;
+
 	Mark takeASession() override final;
 
 private:
@@ -53,6 +58,9 @@ private:
 class Botanist final : public Student
 {
 public:
+	Botanist(const string& lastName, const string& firstName, const string& patronymic, const string& nickname);
+	~Botanist() = default;
+
 	Mark takeASession() override final;
 
 private:

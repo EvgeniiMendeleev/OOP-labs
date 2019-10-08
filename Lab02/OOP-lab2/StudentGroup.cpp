@@ -10,6 +10,7 @@ bool StudentGroup::setStudent(Student& student)
 {
 	if (studentsOfGroup.size() != 20)
 	{
+
 		for (unsigned i = 0; i < studentsOfGroup.size(); i++)
 		{
 			if (studentsOfGroup[i] == &student)
@@ -18,7 +19,6 @@ bool StudentGroup::setStudent(Student& student)
 			}
 		}
 
-		/*student.setNumberOfGroup(numberOfGroup);*/
 		studentsOfGroup.push_back(&student);
 
 		return true;
@@ -70,22 +70,22 @@ bool StudentGroup::deleteStudent(Student& student)
 	}
 }
 
-vector<Student> StudentGroup::getSortStudents(TypeOfSort type)
+vector<Student*> StudentGroup::getSortStudents(TypeOfSort type)
 {
-	vector<Student> sortedStudents;
+	vector<Student*> sortedStudents;
 
 	for (unsigned i = 0; i < studentsOfGroup.size(); i++)
 	{
-		sortedStudents.push_back(*studentsOfGroup[i]);
+		sortedStudents.push_back(studentsOfGroup[i]);
 	}
 
-	if (type == TypeOfSort::lexicogrpahic)
+	if (type == TypeOfSort::lexicographic)
 	{
-		sort(sortedStudents.begin(), sortedStudents.end(), [](Student& v1, Student& v2){ return v1.getLastName() < v2.getLastName(); });
+		sort(sortedStudents.begin(), sortedStudents.end(), [](Student* v1, Student* v2){ return v1->getLastName() < v2->getLastName(); });
 	}
 	else if (type == TypeOfSort::marks)
 	{
-		sort(sortedStudents.begin(), sortedStudents.end(), [](Student& v1, Student& v2){ return v1.getPerformance() < v2.getPerformance(); });
+		sort(sortedStudents.begin(), sortedStudents.end(), [](Student* v1, Student* v2){ return v1->getPerformance() < v2->getPerformance(); });
 	}
 
 	return sortedStudents;
@@ -101,8 +101,8 @@ ostream& operator<<(ostream& stream, StudentGroup& group)
 	for (unsigned i = 0; i < group.getCountOfStudent(); i++)
 	{
 		stream << "------------------------------------------------------------------------------" << endl;
-		stream << "ÃˆÃ¬Ã¿ Ã±Ã²Ã³Ã¤Ã¥Ã­Ã²Ã : " << group.getStudentOnNumber(i).getLastName() << " " << group.getStudentOnNumber(i).getFirstName() << " " << group.getStudentOnNumber(i).getPatronymic() << endl;
-		stream << "Ã“Ã±Ã¯Ã¥Ã¢Ã Ã¥Ã¬Ã®Ã±Ã²Ã¼ Ã±Ã²Ã³Ã¤Ã¥Ã­Ã²Ã : " << static_cast<unsigned>(group.getStudentOnNumber(i).getPerformance()) << endl;
+		stream << "Èìÿ ñòóäåíòà: " << group.getStudentOnNumber(i).getLastName() << " " << group.getStudentOnNumber(i).getFirstName() << " " << group.getStudentOnNumber(i).getPatronymic() << endl;
+		stream << "Óñïåâàåìîñòü ñòóäåíòà: " << static_cast<unsigned>(group.getStudentOnNumber(i).getPerformance()) << endl;
 		stream << "------------------------------------------------------------------------------" << endl;
 	}
 
