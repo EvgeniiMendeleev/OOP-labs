@@ -5,8 +5,8 @@
 
 using namespace std;
 
-enum class TypeOfPerformance { perfectly, good, bad, nothing };				//Тип успеваемости: отличник, хорошист, двоечник, пока оценок нету.
-enum class Layer { botan, common_student, member_of_student_senate };		//Слои студентов.
+enum class TypeOfPerformance { perfectly, good, bad, nothing };				//РўРёРї СѓСЃРїРµРІР°РµРјРѕСЃС‚Рё: РѕС‚Р»РёС‡РЅРёРє, С…РѕСЂРѕС€РёСЃС‚, РґРІРѕРµС‡РЅРёРє, РїРѕРєР° РѕС†РµРЅРѕРє РЅРµС‚Сѓ.
+enum class Layer { botan, common_student, member_of_student_senate };		//РЎР»РѕРё СЃС‚СѓРґРµРЅС‚РѕРІ.
 enum class Mark { two, three, four, five };
 
 class Student
@@ -15,21 +15,21 @@ public:
 	Student(const string& lastName, const string& firstName, const string& patronymic, const TypeOfPerformance performance);
 	virtual ~Student() = default;
 
-	virtual Mark takeASession() = 0;						//Сдать сессию.
+	virtual Mark takeASession() = 0;						//РЎРґР°С‚СЊ СЃРµСЃСЃРёСЋ.
 
 #pragma region Getters
-	const string& getFirstName() const;						//Получить имя.
-	const string& getLastName() const;						//Получить фамилию.
-	const string& getPatronymic() const;					//Получить отчество.
-	TypeOfPerformance getPerformance() const;				//Получить успеваемость.
+	const string& getFirstName() const;						//РџРѕР»СѓС‡РёС‚СЊ РёРјСЏ.
+	const string& getLastName() const;						//РџРѕР»СѓС‡РёС‚СЊ С„Р°РјРёР»РёСЋ.
+	const string& getPatronymic() const;					//РџРѕР»СѓС‡РёС‚СЊ РѕС‚С‡РµСЃС‚РІРѕ.
+	TypeOfPerformance getPerformance() const;				//РџРѕР»СѓС‡РёС‚СЊ СѓСЃРїРµРІР°РµРјРѕСЃС‚СЊ.
 #pragma endregion Get a something value
 
 protected:
-	string firstName;					//Имя
-	string lastName;					//Фамилия
-	string patronymic;					//Отчество
+	string firstName;					//РРјСЏ
+	string lastName;					//Р¤Р°РјРёР»РёСЏ
+	string patronymic;					//РћС‚С‡РµСЃС‚РІРѕ
 
-	TypeOfPerformance performance;		//Успеваемость студента.
+	TypeOfPerformance performance;		//РЈСЃРїРµРІР°РµРјРѕСЃС‚СЊ СЃС‚СѓРґРµРЅС‚Р°.
 };
 
 class SimplyStudent : public Student
@@ -52,7 +52,7 @@ public:
 	Mark takeASession() override final;
 
 private:
-	string post;		//Должность студента в студсовете.
+	string post;		//Р”РѕР»Р¶РЅРѕСЃС‚СЊ СЃС‚СѓРґРµРЅС‚Р° РІ СЃС‚СѓРґСЃРѕРІРµС‚Рµ.
 };
 
 class Botanist final : public Student
@@ -64,7 +64,7 @@ public:
 	Mark takeASession() override final;
 
 private:
-	string nickname;	//Кличка ботаника.
+	string nickname;	//РљР»РёС‡РєР° Р±РѕС‚Р°РЅРёРєР°.
 };
 
 ostream& operator<<(ostream& stream, Student& student);
