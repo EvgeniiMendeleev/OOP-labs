@@ -14,29 +14,29 @@ int main()
 	setlocale(LC_ALL, "Russian");
 
 	StudentGroup group(7091);
-	
-	Botanist Evgenii("Менделеев", "Евгений", "Андреевич");
-	SimplyStudent katya("Богданова", "Екатерина", "Александровна", TypeOfPerformance::good);
-	MemberOfStudentSenate arkasha("Абросимов", "Аркадий", "Иванович", TypeOfPerformance::bad);
 
-	Botanist Katya = katya.toBeBotanist();
-	cout << "Оценка за экзамен ботаника Кати:" << static_cast<int>(Katya.takeASession()) << endl;
+	Student::Botanist Evgenii("Mendeleev", "Evgeny", "Andreevich");
+	Student::Simply katya("Bogdanova", "Ekaterina", "Alecksandrovna", TypeOfPerformance::bad);
+	Student::MemberOfSenate arkasha("Abrosimov", "Arckady", "Ivanovich", TypeOfPerformance::good);
 
-	SimplyStudent againKatya = Katya.toBeSimplyStudent(TypeOfPerformance::good);
-	cout << "Оценка за экзамен обычного студента Кати:" << static_cast<int>(Katya.takeASession()) << endl;
+	Student::Botanist Katya = katya.toBeBotanist();
+	cout << "It's botanist Katya's mark for exam: " << static_cast<int>(Katya.takeASession()) + 2 << endl;
 
-	MemberOfStudentSenate ohKatya = Katya.toBeMemberOfStudentSenate(TypeOfPerformance::bad);
-	cout << "Оценка за экзамен члена студенческого совета Кати:" << static_cast<int>(Katya.takeASession()) << endl;
+	Student::Simply againKatya = Katya.toBeSimplyStudent(TypeOfPerformance::good);
+	cout << "It's simple student Katya's mark for exam: " << static_cast<int>(againKatya.takeASession()) + 2 << endl;
+
+	Student::MemberOfSenate ohKatya = Katya.toBeMemberOfStudentSenate(TypeOfPerformance::bad);
+	cout << "It's student senate's member Katya's mark for exam: " << static_cast<int>(ohKatya.takeASession()) + 2 << endl;
 	
 	group.setStudent(Evgenii);
 	group.setStudent(katya);
 	group.setStudent(arkasha);
 
-	vector<Student*> a = group.getSortStudents(TypeOfSort::lexicographic);
+	vector<Student*> a = group.getSortStudents(TypeOfSort::marks);
 
 	cout << endl;
 	cout << "**********************************************************" << endl;
-	cout << "!!!!!ОТСОРТИРОВАЛИ СТУДЕНТОВ!!!!!" << endl;
+	cout << "!!!!!LIST OF STUDENTS WAS SORTED!!!!!" << endl;
 	
 	for (unsigned i = 0; i < a.size(); i++)
 	{
@@ -45,9 +45,10 @@ int main()
 
 	cout << endl;
 	cout << "**********************************************************" << endl;
-	cout << "!!!!!УДАЛИЛИ СТУДЕНТА!!!!!" << endl;
+	cout << "!!!!!STUDENT WAS DELETED!!!!!" << endl;
 	
-	group.deleteStudent(arkasha);
+	group.deleteStudent(Evgenii);
+
 	cout << group;
 
 	system("Pause");

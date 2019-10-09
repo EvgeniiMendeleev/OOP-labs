@@ -5,65 +5,78 @@
 
 using namespace std;
 
-enum class TypeOfPerformance { perfectly, good, bad, nothing };				//Тип успеваемости: отличник, хорошист, двоечник, пока оценок нету.
-enum class Mark { two, three, four, five };							//Всевозможные оценки
-
-class SimplyStudent;
-class Botanist;
-class MemberOfStudentSenate;
+enum class TypeOfPerformance { perfectly, good, bad, nothing };				//Type of academic performance
+enum class Mark { two, three, four, five };									//All marks of student.
 
 class Student
 {
 public:
+
 	Student(const string& lastName, const string& firstName, const string& patronymic, const TypeOfPerformance performance);
 	virtual ~Student() = default;
 
-	virtual Mark takeASession() = 0;													//Сдать сессию.
-	SimplyStudent toBeSimplyStudent(TypeOfPerformance performance);						//Стать обычным студентом.
-	Botanist toBeBotanist();															//Стать ботаником.
-	MemberOfStudentSenate toBeMemberOfStudentSenate(TypeOfPerformance performance);		//Стать членом студенческого совета.
+	class Simply;
+	class Botanist;
+	class MemberOfSenate;
+
+	virtual Mark takeASession() = 0;													//Pass a session.
+
+	Simply toBeSimplyStudent(TypeOfPerformance performance);							//To be a common student.
+	Botanist toBeBotanist();															//To be a botanist.
+	MemberOfSenate toBeMemberOfStudentSenate(TypeOfPerformance performance);			//To be a member of student senate
 
 #pragma region Getters
 
-	const string& getFirstName() const;						//Получить имя.
-	const string& getLastName() const;						//Получить фамилию.
-	const string& getPatronymic() const;					//Получить отчество.
-	TypeOfPerformance getPerformance() const;				//Получить успеваемость.
+	const string& getFirstName() const;						//Get first name.
+	const string& getLastName() const;						//Get last name.
+	const string& getPatronymic() const;					//Get patronymic.
+	TypeOfPerformance getPerformance() const;				//Get performance of student.
 
 #pragma endregion Get a something value
 
 protected:
-	string firstName;					//Имя
-	string lastName;					//Фамилия
-	string patronymic;					//Отчество
 
-	TypeOfPerformance performance;		//Успеваемость студента.
+	string firstName;
+	string lastName;
+	string patronymic;
+
+	TypeOfPerformance performance;		//Academic performance of student.
 };
 
-class SimplyStudent : public Student
+#pragma region SimplyStudent
+
+class Student::Simply: public Student
 {
 public:
-	SimplyStudent(const string& lastName, const string& firstName, const string& patronymic, const TypeOfPerformance performance);
-	virtual ~SimplyStudent() = default;
-	
+	Simply(const string& lastName, const string& firstName, const string& patronymic, const TypeOfPerformance performance);
+	virtual ~Simply() = default;
+
 	Mark takeASession() override;
 
 private:
 };
 
-class MemberOfStudentSenate final : public SimplyStudent
+#pragma endregion Class of simple student
+
+#pragma region MemberOfStudentSenate
+
+class Student::MemberOfSenate final : public Student::Simply
 {
 public:
-	MemberOfStudentSenate(const string& lastName, const string& firstName, const string& patronymic, const TypeOfPerformance performance);
-	~MemberOfStudentSenate() = default;
+	MemberOfSenate(const string& lastName, const string& firstName, const string& patronymic, const TypeOfPerformance performance);
+	~MemberOfSenate() = default;
 
 	Mark takeASession() override final;
 
 private:
-	unsigned short numberOfPass = 0;	//Число пересдач, которые совершил студент. Изначально он не идёт на пересдачу, поэтому ноль
+	unsigned short numberOfPass = 0;
 };
 
-class Botanist final : public Student
+#pragma endregion Class of member student's senate 
+
+#pragma region StudentBotanist
+
+class Student::Botanist final : public Student
 {
 public:
 	Botanist(const string& lastName, const string& firstName, const string& patronymic);
@@ -73,5 +86,7 @@ public:
 
 private:
 };
+
+#pragma endregion Class of student botanist
 
 ostream& operator<<(ostream& stream, Student& student);

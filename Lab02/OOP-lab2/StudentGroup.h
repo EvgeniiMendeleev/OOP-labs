@@ -11,9 +11,6 @@ using namespace std;
 enum class TypeOfSort { lexicographic, marks };
 
 class Student;
-class Botabist;
-class MemberOfStudentSenate;
-class SimplyStudent;
 
 class StudentGroup
 {
@@ -23,29 +20,30 @@ public:
 
 #pragma region Actions
 
-	bool deleteStudent(Student& student);			//Исключение студента из группы.
+	void deleteStudent(const Student& student);			//Delete a student from group.
 
 #pragma endregion Describes all actions that can be performed on an object.
 
 #pragma region Setters
 
-	bool setStudent(Student& student);				//Принять студента в группу.
+	bool setStudent(Student& student);				//Accept a student to group.
 
 #pragma endregion Set a something value.
 
 #pragma region Getters
 
-	Student* const getStudent(const string& lastName, const string& firstName, const string& patronymic) const;		//Получить студента по ФИО.
-	unsigned getNumber() const;																						//Получить номер группы.
-	unsigned getCountOfStudent();																					//Получить число студентов в группе.
-	vector<Student*> getSortStudents(TypeOfSort type);																//Получить отсортированный список студентов группы, в зависимости от типа сортировка.
-	Student& getStudentOnNumber(unsigned i) const;																	//Получить студента по номеру в списке.
+	const Student* const getStudent(const string& lastName, const string& firstName, const string& patronymic) const;		//Get a student by name.
+	unsigned getNumber() const;																								//Get a number of group.
+	unsigned getCountOfStudent();																							//Get a number of students in group.
+	vector<Student*> getSortStudents(TypeOfSort type);																		//Get a sorted list of students of group depending on the type of sorting.
+	const Student& getConstStudentOnNumber(unsigned i) const;																//Get a student on index in list for read-only.
+	Student& getStudentOnNumber(unsigned i) const;																			//Get a student on index in list.
 
 #pragma endregion Get a something value.
 
 private:
-	unsigned numberOfGroup;						//Номер группы.
-	vector<Student*> studentsOfGroup;			//Студенты группы.
+	unsigned numberOfGroup;						//Number of group.
+	vector<Student*> studentsOfGroup;			//Students of group.
 };
 
 ostream& operator<<(ostream& stream, StudentGroup& group);
