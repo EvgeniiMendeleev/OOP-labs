@@ -1,4 +1,4 @@
-// OOP-lab2.cpp: РѕРїСЂРµРґРµР»СЏРµС‚ С‚РѕС‡РєСѓ РІС…РѕРґР° РґР»СЏ РєРѕРЅСЃРѕР»СЊРЅРѕРіРѕ РїСЂРёР»РѕР¶РµРЅРёСЏ.
+// OOP-lab2.cpp: определяет точку входа для консольного приложения.
 //
 
 #include "stdafx.h"
@@ -14,23 +14,41 @@ int main()
 	setlocale(LC_ALL, "Russian");
 
 	StudentGroup group(7091);
-	Botanist Evgenii("РњРµРЅРґРµР»РµРµРІ", "Р•РІРіРµРЅРёР№", "РђРЅРґСЂРµРµРІРёС‡", "РљРЅРёР¶РЅС‹Р№ С‡РµСЂРІСЊ");
-	SimplyStudent katya("Р‘РѕРіРґР°РЅРѕРІР°", "Р•РєР°С‚РµСЂРёРЅР°", "РђР»РµРєСЃР°РЅРґСЂРѕРІРЅР°", TypeOfPerformance::good);
-	MemberOfStudentSenate arkasha("РђР±СЂРѕСЃРёРјРѕРІ", "РђСЂРєР°РґРёР№", "РРІР°РЅРѕРІРёС‡", "РџСЂРµР·РёРґРµРЅС‚", TypeOfPerformance::bad);
+	
+	Botanist Evgenii("Менделеев", "Евгений", "Андреевич");
+	SimplyStudent katya("Богданова", "Екатерина", "Александровна", TypeOfPerformance::good);
+	MemberOfStudentSenate arkasha("Абросимов", "Аркадий", "Иванович", TypeOfPerformance::bad);
 
+	Botanist Katya = katya.toBeBotanist();
+	cout << "Оценка за экзамен ботаника Кати:" << static_cast<int>(Katya.takeASession()) << endl;
+
+	SimplyStudent againKatya = Katya.toBeSimplyStudent(TypeOfPerformance::good);
+	cout << "Оценка за экзамен обычного студента Кати:" << static_cast<int>(Katya.takeASession()) << endl;
+
+	MemberOfStudentSenate ohKatya = Katya.toBeMemberOfStudentSenate(TypeOfPerformance::bad);
+	cout << "Оценка за экзамен члена студенческого совета Кати:" << static_cast<int>(Katya.takeASession()) << endl;
+	
 	group.setStudent(Evgenii);
 	group.setStudent(katya);
 	group.setStudent(arkasha);
 
-	vector<Student*> a = group.getSortStudents(TypeOfSort::marks);
+	vector<Student*> a = group.getSortStudents(TypeOfSort::lexicographic);
 
+	cout << endl;
+	cout << "**********************************************************" << endl;
+	cout << "!!!!!ОТСОРТИРОВАЛИ СТУДЕНТОВ!!!!!" << endl;
+	
 	for (unsigned i = 0; i < a.size(); i++)
 	{
-		cout << "-----------------------------------------------------------------------------" << endl;
-		cout << "РРјСЏ СЃС‚СѓРґРµРЅС‚Р°: " << a[i]->getLastName() << " " << a[i]->getFirstName() << " " << a[i]->getPatronymic() << endl;
-		cout << "РЈСЃРїРµРІР°РµРјРѕСЃС‚СЊ СЃС‚СѓРґРµРЅС‚Р°: " << static_cast<unsigned>(a[i]->getPerformance()) << endl;
-		cout << "-----------------------------------------------------------------------------" << endl;
+		cout << *a[i];
 	}
+
+	cout << endl;
+	cout << "**********************************************************" << endl;
+	cout << "!!!!!УДАЛИЛИ СТУДЕНТА!!!!!" << endl;
+	
+	group.deleteStudent(arkasha);
+	cout << group;
 
 	system("Pause");
 	return 0;

@@ -5,9 +5,12 @@
 
 using namespace std;
 
-enum class TypeOfPerformance { perfectly, good, bad, nothing };				//РўРёРї СѓСЃРїРµРІР°РµРјРѕСЃС‚Рё: РѕС‚Р»РёС‡РЅРёРє, С…РѕСЂРѕС€РёСЃС‚, РґРІРѕРµС‡РЅРёРє, РїРѕРєР° РѕС†РµРЅРѕРє РЅРµС‚Сѓ.
-enum class Layer { botan, common_student, member_of_student_senate };		//РЎР»РѕРё СЃС‚СѓРґРµРЅС‚РѕРІ.
-enum class Mark { two, three, four, five };
+enum class TypeOfPerformance { perfectly, good, bad, nothing };				//Тип успеваемости: отличник, хорошист, двоечник, пока оценок нету.
+enum class Mark { two, three, four, five };							//Всевозможные оценки
+
+class SimplyStudent;
+class Botanist;
+class MemberOfStudentSenate;
 
 class Student
 {
@@ -15,21 +18,26 @@ public:
 	Student(const string& lastName, const string& firstName, const string& patronymic, const TypeOfPerformance performance);
 	virtual ~Student() = default;
 
-	virtual Mark takeASession() = 0;						//РЎРґР°С‚СЊ СЃРµСЃСЃРёСЋ.
+	virtual Mark takeASession() = 0;													//Сдать сессию.
+	SimplyStudent toBeSimplyStudent(TypeOfPerformance performance);						//Стать обычным студентом.
+	Botanist toBeBotanist();															//Стать ботаником.
+	MemberOfStudentSenate toBeMemberOfStudentSenate(TypeOfPerformance performance);		//Стать членом студенческого совета.
 
 #pragma region Getters
-	const string& getFirstName() const;						//РџРѕР»СѓС‡РёС‚СЊ РёРјСЏ.
-	const string& getLastName() const;						//РџРѕР»СѓС‡РёС‚СЊ С„Р°РјРёР»РёСЋ.
-	const string& getPatronymic() const;					//РџРѕР»СѓС‡РёС‚СЊ РѕС‚С‡РµСЃС‚РІРѕ.
-	TypeOfPerformance getPerformance() const;				//РџРѕР»СѓС‡РёС‚СЊ СѓСЃРїРµРІР°РµРјРѕСЃС‚СЊ.
+
+	const string& getFirstName() const;						//Получить имя.
+	const string& getLastName() const;						//Получить фамилию.
+	const string& getPatronymic() const;					//Получить отчество.
+	TypeOfPerformance getPerformance() const;				//Получить успеваемость.
+
 #pragma endregion Get a something value
 
 protected:
-	string firstName;					//РРјСЏ
-	string lastName;					//Р¤Р°РјРёР»РёСЏ
-	string patronymic;					//РћС‚С‡РµСЃС‚РІРѕ
+	string firstName;					//Имя
+	string lastName;					//Фамилия
+	string patronymic;					//Отчество
 
-	TypeOfPerformance performance;		//РЈСЃРїРµРІР°РµРјРѕСЃС‚СЊ СЃС‚СѓРґРµРЅС‚Р°.
+	TypeOfPerformance performance;		//Успеваемость студента.
 };
 
 class SimplyStudent : public Student
@@ -46,25 +54,24 @@ private:
 class MemberOfStudentSenate final : public SimplyStudent
 {
 public:
-	MemberOfStudentSenate(const string& lastName, const string& firstName, const string& patronymic, const string& post, const TypeOfPerformance performance);
+	MemberOfStudentSenate(const string& lastName, const string& firstName, const string& patronymic, const TypeOfPerformance performance);
 	~MemberOfStudentSenate() = default;
 
 	Mark takeASession() override final;
 
 private:
-	string post;		//Р”РѕР»Р¶РЅРѕСЃС‚СЊ СЃС‚СѓРґРµРЅС‚Р° РІ СЃС‚СѓРґСЃРѕРІРµС‚Рµ.
+	unsigned short numberOfPass = 0;	//Число пересдач, которые совершил студент. Изначально он не идёт на пересдачу, поэтому ноль
 };
 
 class Botanist final : public Student
 {
 public:
-	Botanist(const string& lastName, const string& firstName, const string& patronymic, const string& nickname);
+	Botanist(const string& lastName, const string& firstName, const string& patronymic);
 	~Botanist() = default;
 
 	Mark takeASession() override final;
 
 private:
-	string nickname;	//РљР»РёС‡РєР° Р±РѕС‚Р°РЅРёРєР°.
 };
 
 ostream& operator<<(ostream& stream, Student& student);

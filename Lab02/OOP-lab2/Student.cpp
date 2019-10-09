@@ -12,6 +12,21 @@ Student::Student(const string& lastName, const string& firstName, const string& 
 	this->performance = performance;
 }
 
+Botanist Student::toBeBotanist()
+{
+	return Botanist(this->getLastName(), this->getFirstName(), this->getPatronymic());
+}
+
+SimplyStudent Student::toBeSimplyStudent(TypeOfPerformance performance)
+{
+	return SimplyStudent(this->getLastName(), this->getFirstName(), this->getPatronymic(), performance);
+}
+
+MemberOfStudentSenate Student::toBeMemberOfStudentSenate(TypeOfPerformance performance)
+{
+	return MemberOfStudentSenate(this->getLastName(), this->getFirstName(), this->getPatronymic(), performance);
+}
+
 const string& Student::getFirstName() const
 {
 	return firstName;
@@ -53,11 +68,8 @@ Mark Botanist::takeASession()
 	return static_cast<Mark>(rand() % 4 + 2);
 }
 
-Botanist::Botanist(const string& lastName, const string& firstName, const string& patronymic, const string& nickname)
-	:Student(lastName, firstName, patronymic, TypeOfPerformance::perfectly) 
-{
-	this->nickname = nickname;
-}
+Botanist::Botanist(const string& lastName, const string& firstName, const string& patronymic)
+	:Student(lastName, firstName, patronymic, TypeOfPerformance::perfectly) { }
 
 #pragma endregion Methods_of_Botanist
 
@@ -65,31 +77,31 @@ Botanist::Botanist(const string& lastName, const string& firstName, const string
 
 Mark MemberOfStudentSenate::takeASession()
 {
-	static unsigned short numberOfPass = 0;			//РР·РЅР°С‡Р°Р»СЊРЅРѕ РѕРЅ РЅРµ РёРґС‘С‚ РЅР° РїРµСЂРµСЃРґР°С‡Сѓ, РїРѕСЌС‚РѕРјСѓ РЅРѕР»СЊ
 	Mark mark = static_cast<Mark>(rand() % 4);
 
 	(mark == Mark::two) ? ++numberOfPass : numberOfPass = 0;
 
-	//Р•СЃР»Рё СѓР¶Рµ РІС‚РѕСЂР°СЏ, С‚.Рµ. РїРѕСЃР»РµРґРЅСЏСЏ, РїРµСЂРµСЃРґР°С‡Р°, С‚Рѕ РїРѕР»СѓС‡Р°РµС‚ С‚СЂРѕР№РєСѓ
+	//Если уже вторая, т.е. последняя, пересдача, то получает тройку
 	if (numberOfPass == 2)
 	{
+		numberOfPass = 0;
 		return Mark::three;
 	}
 
 	return mark;
 }
 
-MemberOfStudentSenate::MemberOfStudentSenate(const string& lastName, const string& firstName, const string& patronymic, const string& post, const TypeOfPerformance performance)
+MemberOfStudentSenate::MemberOfStudentSenate(const string& lastName, const string& firstName, const string& patronymic, const TypeOfPerformance performance)
 	:SimplyStudent(lastName, firstName, patronymic, performance){}
 
 #pragma endregion Methods_of_MemberOfStudentSenate
 
 ostream& operator<<(ostream& stream, Student& student)
 {
-	stream << "-----------------------------------------------------------------------------------------------" << endl;
-	stream << "РРјСЏ СЃС‚СѓРґРµРЅС‚Р°: " << student.getLastName() << " " << student.getFirstName() << " " << student.getPatronymic() << endl;
-	stream << "РЈСЃРїРµРІР°РµРјРѕСЃС‚СЊ СЃС‚СѓРґРµРЅС‚Р°: " << static_cast<unsigned>(student.getPerformance()) << endl;
-	stream << "-----------------------------------------------------------------------------------------------" << endl;
+	stream << "---------------------------------------------------------------------------" << endl;
+	stream << "Имя студента: " << student.getLastName() << " " << student.getFirstName() << " " << student.getPatronymic() << endl;
+	stream << "Успеваемость студента: " << static_cast<unsigned>(student.getPerformance()) << endl;
+	stream << "---------------------------------------------------------------------------" << endl;
 
 	return stream;
 }

@@ -27,7 +27,7 @@ bool StudentGroup::setStudent(Student& student)
 	return false;
 }
 
-const Student* StudentGroup::getStudent(const string& lastName, const string& firstName, const string& patronymic) const
+Student* const StudentGroup::getStudent(const string& lastName, const string& firstName, const string& patronymic) const
 {
 	for (unsigned i = 0; i < studentsOfGroup.size(); i++)
 	{
@@ -100,10 +100,10 @@ ostream& operator<<(ostream& stream, StudentGroup& group)
 {
 	for (unsigned i = 0; i < group.getCountOfStudent(); i++)
 	{
-		stream << "------------------------------------------------------------------------------" << endl;
-		stream << "Ð˜Ð¼Ñ ÑÑ‚ÑƒÐ´ÐµÐ½Ñ‚Ð°: " << group.getStudentOnNumber(i).getLastName() << " " << group.getStudentOnNumber(i).getFirstName() << " " << group.getStudentOnNumber(i).getPatronymic() << endl;
-		stream << "Ð£ÑÐ¿ÐµÐ²Ð°ÐµÐ¼Ð¾ÑÑ‚ÑŒ ÑÑ‚ÑƒÐ´ÐµÐ½Ñ‚Ð°: " << static_cast<unsigned>(group.getStudentOnNumber(i).getPerformance()) << endl;
-		stream << "------------------------------------------------------------------------------" << endl;
+		stream << "---------------------------------------------------------------------------" << endl;
+		stream << "Èìÿ ñòóäåíòà: " << group.getStudentOnNumber(i).getLastName() << " " << group.getStudentOnNumber(i).getFirstName() << " " << group.getStudentOnNumber(i).getPatronymic() << endl;
+		stream << "Óñïåâàåìîñòü ñòóäåíòà: " << static_cast<unsigned>(group.getStudentOnNumber(i).getPerformance()) << endl;
+		stream << "---------------------------------------------------------------------------"<< endl;
 	}
 
 	return stream;
